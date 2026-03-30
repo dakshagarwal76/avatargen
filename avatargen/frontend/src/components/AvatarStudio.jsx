@@ -98,6 +98,7 @@ export default function AvatarStudio() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(180px,1fr))', gap: 12, marginTop: 12 }}>
           {builtins.map(b => (
             <div key={b.id} className="card" style={{ padding: 8 }}>
+              <img src={b.preview_url} onError={e => { e.currentTarget.src = b.fallback_preview_url }} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 10 }} />
               <img src={b.preview_url} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 10 }} />
               <div style={{ fontSize: 12, fontWeight: 600, margin: '8px 0' }}>{b.name}</div>
               <button className="btn-secondary" style={{ width: '100%' }} onClick={() => addBuiltin(b.id)} disabled={uploading}>Add</button>
