@@ -124,6 +124,11 @@ async def tts_generate(req: TTSRequest):
 @app.get("/api/avatars/builtin")
 async def list_builtin_avatars():
     return {"avatars": [avatar_service.builtin_preview(item) for item in avatar_service.BUILTIN_AVATARS]}
+    avatars = []
+    for item in avatar_service.BUILTIN_AVATARS:
+        url = avatar_service.make_pollinations_url(item["prompt"], seed=item["seed"])
+        avatars.append({"id": item["id"], "name": item["name"], "preview_url": url, "prompt": item["prompt"]})
+    return {"avatars": avatars}
 
 
 @app.post("/api/avatars/add-builtin/{builtin_id}")
@@ -141,6 +146,7 @@ async def add_builtin_avatar(builtin_id: str):
         )
     except Exception as exc:
         raise HTTPException(status_code=502, detail=str(exc))
+    await avatar_service.download_to_path(url, avatar_path)
 
     meta = {
         "id": avatar_id,
@@ -155,7 +161,31 @@ async def add_builtin_avatar(builtin_id: str):
     }
     (UPLOAD_DIR / f"{avatar_id}.json").write_text(json.dumps(meta))
     return meta
+    }
+    (UPLOAD_DIR / f"{avatar_id}.json").write_text(json.dumps(meta))
+    return meta
 
+
+@app.post("/api/avatars/generate")
+async def generate_avatar_from_prompt(prompt: str = Form(...), name: str = Form("Generated Avatar"), seed: int = Form(1234)):
+    avatar_id = str(uuid.uuid4())
+    avatar_path = UPLOAD_DIR / f"{avatar_id}.jpg"
+    url = avatar_service.make_pollinations_url(prompt, seed=seed)
+    await avatar_service.download_to_path(url, avatar_path)
+
+    meta = {
+        "id": avatar_id,
+        "name": name,
+        "type": "image",
+        "path": str(avatar_path),
+        "url": f"/avatars/{avatar_id}.jpg",
+        "thumb_url": f"/avatars/{avatar_id}.jpg",
+        "created_at": datetime.now().isoformat(),
+        "source": "prompt",
+        "prompt": prompt,
+    }
+    (UPLOAD_DIR / f"{avatar_id}.json").write_text(json.dumps(meta))
+    return meta
 
 @app.post("/api/avatars/generate")
 async def generate_avatar_from_prompt(prompt: str = Form(...), name: str = Form("Generated Avatar"), seed: int = Form(1234)):
@@ -385,6 +415,8 @@ async def upload_audio(file: UploadFile = File(...)):
         mp3_path = AUDIO_DIR / f"{audio_id}.mp3"
         await video_service.convert_audio(str(source), str(mp3_path))
         source.unlink(missing_ok=True)
+
+    return {"audio_id": audio_id, "audio_url": f"/audio/{audio_id}.mp3"}
 
     return {"audio_id": audio_id, "audio_url": f"/audio/{audio_id}.mp3"}
 
