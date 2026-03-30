@@ -159,9 +159,7 @@ async def add_builtin_avatar(builtin_id: str):
         "source": "builtin",
         "image_provider": download_meta.get("provider"),
     }
-    (UPLOAD_DIR / f"{avatar_id}.json").write_text(json.dumps(meta))
-    return meta
-    }
+
     (UPLOAD_DIR / f"{avatar_id}.json").write_text(json.dumps(meta))
     return meta
 
