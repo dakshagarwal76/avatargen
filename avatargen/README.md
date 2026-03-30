@@ -12,7 +12,7 @@
 |---|---|
 | 🎙️ **Indian Voices** | 22+ voices across Hindi, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia, English (Indian) |
 | 🎭 **Lip Sync** | Wav2Lip — state-of-the-art open-source lip sync, works on any face photo or video |
-| 📓 **NotebookLM Import** | Upload your NotebookLM podcast audio → get a talking-avatar video |
+| 📓 **NotebookLM Video Import** | Upload NotebookLM videos, auto-extract audio, and generate avatar-over-video output |
 | 💸 **100% Free** | No API keys, no subscriptions, no per-video costs. Ever. |
 | 🇮🇳 **Indian-First** | Designed for Indian avatars, Indian languages, Indian creators |
 | 🔧 **Self-Hosted** | Runs on your own machine, full data privacy |
@@ -91,10 +91,9 @@ API docs → **http://localhost:8000/docs**
 5. Click **Generate Video** → done in ~2–10 minutes
 
 ### Option B — From NotebookLM
-1. In NotebookLM, go to **Audio Overview → Download**
-2. Go to **NotebookLM** tab in AvatarGen
-3. Upload the audio, pick an avatar, click **Generate**
-4. The avatar lip-syncs to the entire podcast!
+1. Export your NotebookLM video and upload it in **NotebookLM Video Import**.
+2. Pick an import mode (background+corner avatar or replacement workflow).
+3. Select an avatar, optionally replace the script/voice, and generate.
 
 ---
 
