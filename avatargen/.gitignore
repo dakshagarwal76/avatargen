@@ -1,0 +1,33 @@
+# Storage (generated files)
+backend/storage/
+storage/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Models (too large for git)
+*.pth
+*.pkl
+*.onnx
